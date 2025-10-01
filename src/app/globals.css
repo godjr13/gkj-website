@@ -16,6 +16,10 @@ body {
   overflow-x: hidden;
 }
 
+.nav{
+  font-weight: bold;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -33,6 +37,13 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.titles-mid{
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 30;
 }
 
 @media (prefers-color-scheme: dark) {
