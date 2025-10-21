@@ -1,12 +1,12 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e6dcc3;
+  --foreground: #e6dcc3;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #e6dcc3;
+    --foreground: #e6dcc3;
   }
 }
 
@@ -18,6 +18,7 @@ body {
 
 .nav{
   font-weight: bold;
+  background-color: black;
 }
 
 body {
@@ -40,11 +41,16 @@ a {
 }
 
 .titles-mid{
-  color: #ffffff;
+  color: #ebe5d5;
   font-weight: bold;
   text-align: center;
   padding-top: 30;
 }
+
+li{
+  color: #ebe5d5;
+}
+
 
 @media (prefers-color-scheme: dark) {
   html {

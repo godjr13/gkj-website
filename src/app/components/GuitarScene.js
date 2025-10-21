@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
+
 export default function GuitarScene() {
   const mountRef = useRef(null);
   const spotlightRef = useRef(null);
@@ -20,7 +21,7 @@ export default function GuitarScene() {
     );
     camera.position.x = 0;
     camera.position.y = 0;
-    camera.position.z = 3;
+    camera.position.z = 2;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(mount.clientWidth, mount.clientHeight);
@@ -100,5 +101,44 @@ export default function GuitarScene() {
     };
   }, []);
 
-  return <div ref={mountRef} style={{ width: "100%", height: "100vh" }} />;
+  return (
+      <div style={{ position: "relative", width: "100%", height: "700px" }}>
+      {/* Three.js Container - remains as is */}
+      <div ref={mountRef} style={{ width: "100%", height: "100%" }} />
+
+      {/* OVERLAY TEXT CONTAINER with position: absolute */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between", 
+          alignItems: "center", 
+          pointerEvents: "none", 
+          zIndex: 10, 
+          color: "white", 
+          fontFamily: "sans-serif",
+          textAlign: "left"
+        }}
+      >
+        <div><h1 style={{ width:"80%", fontSize: "2rem", marginBottom: "1rem", textAlign:"left", paddingLeft: "40px"}}>
+          GUITARS AND AUDIO EQUIPMENTS
+        </h1>
+        
+        <p style={{width:"100%", fontSize: "1.2rem", textAlign:"left", paddingLeft: "40px"}}>
+          Custom made just for you.
+        </p>
+        </div>
+        <div>
+          <h1 style={{width:"100%", textAlign: "right", paddingRight: "40px"}}>CHOOSE THE TONE YOU DESIRE</h1>
+          <p style={{textAlign: "right", paddingRight: "40px"}}>Let your ear decide.</p>
+        </div>
+        
+      </div>
+    </div>
+  );
 }

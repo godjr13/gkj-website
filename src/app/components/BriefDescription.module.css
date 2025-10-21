@@ -2,7 +2,7 @@
 .container {
   padding: 120px 20px;
   min-height: 150vh; 
-  color: #fff; 
+  color: #ebe5d5; 
   background: transparent;
 }
 
@@ -25,13 +25,12 @@
 .item {
   font-weight: 200;
   text-align: center;
-  opacity: 0;
   transition: transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.8s;
   max-width: 520px;
   min-height: 160px; 
   padding: 18px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.02);
+  background: #ebe5d5;
 }
 
 .item_header{
