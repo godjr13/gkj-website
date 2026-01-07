@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+import Image from 'next/image';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,7 +22,36 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        
+        <div className="nav" style={{ position: "relative", width: "100%", height: "60px" }}>
+
+          <Link href="/">
+            <Image 
+              src="/Logo white@4x-8.png"
+              alt="GKJ" 
+              className="logo" 
+              width={80}
+              height={40}         
+              priority                
+            />
+          </Link>
+
+          <nav style={{ position: "absolute", top: "20px", right: "20px" }}>
+            <ul style={{ display: "flex", gap: "20px", listStyle: "none" }}>
+              
+              {/*
+              <li><Link href="/pages/shop/shop.js">Shop</Link></li>
+              <li><Link href="/login">Login</Link></li>
+              */}           
+              <li><Link href="/contact">Contact Us</Link></li>
+              <li><Link href="/gallery">Gallery</Link></li>
+              <li><Link href="/about">About</Link></li>
+            </ul>
+          </nav>
+        </div>
+
         {children}
       </body>
     </html>
