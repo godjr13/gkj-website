@@ -27,7 +27,7 @@
   text-align: center;
   transition: transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.8s;
   max-width: 520px;
-  min-height: 160px; 
+  min-width: 160px; 
   padding: 18px;
   border-radius: 8px;
   background: #ebe5d5;
