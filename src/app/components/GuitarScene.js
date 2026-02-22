@@ -3,58 +3,85 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-
 export default function GuitarScene() {
   const mountRef = useRef(null);
   const spotlightRef = useRef(null);
 
   useEffect(() => {
     const mount = mountRef.current;
+    if (!mount) return;
 
-    // Scene, camera, renderer
+    // 1. Scene, camera, renderer
     const scene = new THREE.Scene();
+    
+    // Fixed FOV: 500 was too high; 50 is standard for a natural look
     const camera = new THREE.PerspectiveCamera(
-      500,
+      50,
       mount.clientWidth / mount.clientHeight,
-      1,
-      100
+      0.1,
+      1000
     );
-    camera.position.x = 0;
-    camera.position.y = 0;
-    camera.position.z = 2;
+    camera.position.z = 5;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(mount.clientWidth, mount.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
     mount.appendChild(renderer.domElement);
 
-    // Very dim ambient light so model is barely visible
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.05);
+    // 2. Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
     scene.add(ambientLight);
 
-    // Spotlight (disabled by default)
-    const spotlight = new THREE.SpotLight(0xffffff, 8, 15, Math.PI/2, 0.25);
+    const spotlight = new THREE.SpotLight(0xffffff, 15, 20, Math.PI / 4, 0.5);
+    spotlight.position.set(0, 0, 5);
     spotlight.castShadow = true;
-    spotlight.visible = true;
     scene.add(spotlight);
     spotlightRef.current = spotlight;
 
-    // Load GLTF guitar model
+    // 3. Load Model
     const loader = new GLTFLoader();
     loader.load("/stratocaster.glb", (gltf) => {
       const guitar = gltf.scene;
-
-      // Make it bigger
       guitar.scale.set(12, 12, 12);
-
-      // Rotate 90 degrees (π/2 radians) around X and Z
-      guitar.rotation.x = Math.PI/2;
-      guitar.rotation.z = Math.PI*2;
-      guitar.rotation.y = (Math.PI/2)*3;
-
+      
+      // Orientation adjustments
+      guitar.rotation.x = Math.PI / 2;
+      guitar.rotation.y = (Math.PI / 2) * 3;
       scene.add(guitar);
     });
 
-    // Resize handler
+    // 4. Interaction & Auto-Float Logic
+    const clock = new THREE.Clock();
+    let lastInteractionTime = 0;
+    let isInteracting = false;
+
+    const updateLightPosition = (clientX, clientY) => {
+      if (!spotlightRef.current) return;
+      const rect = mount.getBoundingClientRect();
+      const x = ((clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((clientY - rect.top) / rect.height) * 2 + 1;
+      
+      // Follow cursor/finger
+      spotlightRef.current.position.x = x * 5;
+      spotlightRef.current.position.y = y * 3;
+      lastInteractionTime = Date.now();
+      isInteracting = true;
+    };
+
+    // Event Handlers
+    const onMouseMove = (e) => updateLightPosition(e.clientX, e.clientY);
+    const onTouchMove = (e) => {
+      if (e.touches.length > 0) {
+        updateLightPosition(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+    const onMouseLeave = () => { isInteracting = false; };
+
+    mount.addEventListener("mousemove", onMouseMove);
+    mount.addEventListener("touchmove", onTouchMove);
+    mount.addEventListener("mouseleave", onMouseLeave);
+
+    // 5. Resize Handler
     const handleResize = () => {
       camera.aspect = mount.clientWidth / mount.clientHeight;
       camera.updateProjectionMatrix();
@@ -62,51 +89,39 @@ export default function GuitarScene() {
     };
     window.addEventListener("resize", handleResize);
 
-    // Mouse move handler
-    const handleMouseMove = (e) => {
-      if (!spotlightRef.current) return;
-      const rect = mount.getBoundingClientRect();
-      const mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-
-      spotlightRef.current.position.set(mouseX * 5, mouseY * 3, 3);
-    };
-
-    // Mouse enter/leave
-    const handleMouseEnter = () => {
-      if (spotlightRef.current) spotlightRef.current.visible = true;
-    };
-    const handleMouseLeave = () => {
-      if (spotlightRef.current) spotlightRef.current.visible = true;
-    };
-
-    mount.addEventListener("mousemove", handleMouseMove);
-    mount.addEventListener("mouseenter", handleMouseEnter);
-    mount.addEventListener("mouseleave", handleMouseLeave);
-
-    // Animation loop
+    // 6. Animation Loop
     const animate = () => {
-      requestAnimationFrame(animate);
+      const requestID = requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      // If no interaction for 2 seconds, start floating automatically
+      if (!isInteracting || Date.now() - lastInteractionTime > 2000) {
+        if (spotlightRef.current) {
+          spotlightRef.current.position.x = Math.sin(elapsedTime * 0.8) * 4;
+          spotlightRef.current.position.y = Math.cos(elapsedTime * 0.5) * 2;
+        }
+      }
+
       renderer.render(scene, camera);
     };
     animate();
 
-    // Cleanup
+    // 7. Cleanup
     return () => {
       window.removeEventListener("resize", handleResize);
-      mount.removeEventListener("mousemove", handleMouseMove);
-      mount.removeEventListener("mouseenter", handleMouseEnter);
-      mount.removeEventListener("mouseleave", handleMouseLeave);
+      mount.removeEventListener("mousemove", onMouseMove);
+      mount.removeEventListener("touchmove", onTouchMove);
+      mount.removeEventListener("mouseleave", onMouseLeave);
       mount.removeChild(renderer.domElement);
+      renderer.dispose();
     };
   }, []);
 
   return (
-      <div style={{ position: "relative", width: "100%", height: "700px" }}>
-      {/* Three.js Container - remains as is */}
+    <div style={{ position: "relative", width: "100%", height: "700px", background: "#000" }}>
       <div ref={mountRef} style={{ width: "100%", height: "100%" }} />
 
-      {/* OVERLAY TEXT CONTAINER with position: absolute */}
+      {/* OVERLAY TEXT */}
       <div
         style={{
           position: "absolute",
@@ -116,28 +131,25 @@ export default function GuitarScene() {
           height: "100%",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between", 
-          alignItems: "center", 
-          pointerEvents: "none", 
-          zIndex: 10, 
-          color: "white", 
+          justifyContent: "space-between",
+          alignItems: "center",
+          pointerEvents: "none",
+          zIndex: 10,
+          color: "white",
           fontFamily: "sans-serif",
-          textAlign: "left"
+          padding: "0 40px"
         }}
       >
-        <div><h1 style={{ width:"80%", fontSize: "2rem", marginBottom: "1rem", textAlign:"left", paddingLeft: "40px"}}>
-          GUITARS AND AUDIO EQUIPMENTS
-        </h1>
-        
-        <p style={{width:"100%", fontSize: "1.2rem", textAlign:"left", paddingLeft: "40px"}}>
-          Custom made just for you.
-        </p>
+        <div style={{ maxWidth: "40%" }}>
+          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+            GUITARS AND AUDIO EQUIPMENTS
+          </h1>
+          <p style={{ fontSize: "1.2rem" }}>Custom made just for you.</p>
         </div>
-        <div>
-          <h1 style={{width:"100%", textAlign: "right", paddingRight: "40px"}}>CHOOSE THE TONE YOU DESIRE</h1>
-          <p style={{textAlign: "right", paddingRight: "40px"}}>Let your ear decide.</p>
+        <div style={{ textAlign: "right", maxWidth: "40%" }}>
+          <h1>CHOOSE THE TONE YOU DESIRE</h1>
+          <p>Let your ear decide.</p>
         </div>
-        
       </div>
     </div>
   );
