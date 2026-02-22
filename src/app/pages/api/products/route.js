@@ -1,5 +1,12 @@
 import { supabase } from '@/lib/supabaseClient'
 
+if (!supabase) {
+  return Response.json(
+    { error: 'Supabase not configured' },
+    { status: 500 }
+  )
+}
+
 // GET all products
 export async function GET() {
   const { data, error } = await supabase.from('products').select('*')
