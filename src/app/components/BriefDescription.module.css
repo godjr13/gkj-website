@@ -1,8 +1,7 @@
-
 .container {
-  padding: 120px 20px;
-  min-height: 150vh; 
-  color: #ebe5d5; 
+  padding: 80px 20px;
+  min-height: 100vh;
+  color: #ebe5d5;
   background: transparent;
 }
 
@@ -10,10 +9,9 @@
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
   align-items: start;
-  position: relative;
 }
 
 .column {
@@ -23,31 +21,28 @@
 }
 
 .item {
+  width: 100%;                 /* fills grid column */
+  max-width: 520px;            /* prevents giant stretching */
+  margin: 0 auto;              /* center inside column */
   font-weight: 200;
   text-align: center;
   transition: transform 0.8s cubic-bezier(.2,.8,.2,1), opacity 0.8s;
-  max-width: 520px;
-  min-width: 160px; 
   padding: 18px;
   border-radius: 8px;
   background: #ebe5d5;
 }
 
-.item_header{
-  text-align: center;
-  padding: 10;
-}
+/* Mobile */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;   /* single column */
+  }
 
-.text_padded{
-  padding: 10;
-}
+  .container {
+    padding: 60px 16px;
+  }
 
-/* starting offsets */
-.fromLeft { transform: translateX(-60px); }
-.fromRight { transform: translateX(60px); }
-
-/* when visible: slide to 0 and fade in */
-.visible {
-  opacity: 1;
-  transform: translateX(0);
+  .item {
+    max-width: 100%;              /* no weird side gaps */
+  }
 }
