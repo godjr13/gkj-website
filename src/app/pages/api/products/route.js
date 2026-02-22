@@ -1,26 +1,26 @@
 import { supabase } from '@/lib/supabaseClient'
 
-if (!supabase) {
-  return Response.json(
-    { error: 'Supabase not configured' },
-    { status: 500 }
-  )
-}
+export default async function handler(req, res) {
+  if (!supabase) {
+    return res.status(500).json({ error: 'Supabase not configured' })
+  }
 
-// GET all products
-export async function GET() {
-  const { data, error } = await supabase.from('products').select('*')
-  if (error) return Response.json({ error: error.message }, { status: 500 })
-  return Response.json(data)
-}
+  if (req.method === 'GET') {
+    const { data, error } = await supabase.from('products').select('*')
+    if (error) return res.status(500).json({ error: error.message })
+    return res.status(200).json(data)
+  }
 
-// POST a new product
-export async function POST(request) {
-  const body = await request.json()
-  const { name, description, price, image_url } = body
+  if (req.method === 'POST') {
+    const { name, description, price, image_url } = req.body
+    const { error } = await supabase
+      .from('products')
+      .insert([{ name, description, price, image_url }])
 
-  const { error } = await supabase.from('products').insert([{ name, description, price, image_url }])
-  if (error) return Response.json({ error: error.message }, { status: 500 })
+    if (error) return res.status(500).json({ error: error.message })
 
-  return Response.json({ message: 'Product added successfully' }, { status: 201 })
+    return res.status(201).json({ message: 'Product added successfully' })
+  }
+
+  return res.status(405).json({ message: 'Method not allowed' })
 }

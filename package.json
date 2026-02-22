@@ -20,6 +20,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^0.1.0",
     "eslint": "^10.0.0",
-    "eslint-config-next": "^16.1.6"
+    "eslint-config-next": "^16.1.6",
+    "lodash": "^4.17.23"
   }
 }
