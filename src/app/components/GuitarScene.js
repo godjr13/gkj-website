@@ -141,7 +141,7 @@ export default function GuitarScene() {
         }}
       >
         <div style={{ maxWidth: "40%" }}>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+          <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
             GUITARS AND AUDIO EQUIPMENTS
           </h1>
           <p style={{ fontSize: "1.2rem" }}>Custom made just for you.</p>
