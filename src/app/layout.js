@@ -44,11 +44,11 @@ export default function RootLayout({ children }) {
               {/*
               <li><Link href="/pages/shop/shop.js">Shop</Link></li>
               <li><Link href="/login">Login</Link></li>
-              */}           
-              <li><Link href="/contact">Contact Us</Link></li>
               <li><Link href="/gallery">Gallery</Link></li>
               <li><Link href="/about">About</Link></li>
-            </ul>
+              */}           
+              <li><Link href="/contact">Contact Us</Link></li>
+              </ul>
           </nav>
         </div>
 

@@ -141,14 +141,14 @@ export default function GuitarScene() {
         }}
       >
         <div style={{ maxWidth: "40%" }}>
-          <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
             GUITARS AND AUDIO EQUIPMENTS
           </h1>
           <p style={{ fontSize: "1.2rem" }}>Custom made just for you.</p>
         </div>
-        <div style={{ textAlign: "right", maxWidth: "40%" }}>
-          <h1>CHOOSE THE TONE YOU DESIRE</h1>
-          <p>Let your ear decide.</p>
+        <div style={{ textAlign: "right", maxWidth: "35%" }}>
+          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>CHOOSE THE TONE YOU DESIRE</h1>
+          <p style={{ fontSize: "1.2rem" }}>Let your ear decide.</p>
         </div>
       </div>
     </div>
