@@ -118,7 +118,7 @@ export default function GuitarScene() {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "700px", background: "#000" }}>
+    <div style={{ position: "relative", width: "100%", height: "100vh", background: "#000" }}>
       <div ref={mountRef} style={{ width: "100%", height: "100%" }} />
 
       {/* OVERLAY TEXT */}
@@ -141,14 +141,14 @@ export default function GuitarScene() {
         }}
       >
         <div style={{ maxWidth: "40%" }}>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+          <h1 style={{ fontSize: "clamp(1.8rem, 5vw, 3rem)", marginBottom: "1rem" }}>
             GUITARS AND AUDIO EQUIPMENTS
           </h1>
-          <p style={{ fontSize: "1.2rem" }}>Custom made just for you.</p>
+          <p style={{ fontSize: "clamp(1rem, 3vw, 1.2rem)" }}>Custom made just for you.</p>
         </div>
         <div style={{ textAlign: "right", maxWidth: "35%" }}>
-          <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>CHOOSE THE TONE YOU DESIRE</h1>
-          <p style={{ fontSize: "1.2rem" }}>Let your ear decide.</p>
+          <h1 style={{ fontSize: "clamp(1.8rem, 5vw, 3rem)", marginBottom: "1rem" }}>CHOOSE THE TONE YOU DESIRE</h1>
+          <p style={{ fontSize: "clamp(1rem, 3vw, 1.2rem)" }}>Let your ear decide.</p>
         </div>
       </div>
     </div>

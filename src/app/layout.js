@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
 
           <Link href="/">
             <Image 
-              src="/Logo white@4x-8.png"
+              src="/Logo white@4x-8.svg"
               alt="GKJ" 
               className="logo" 
               width={80}
@@ -40,7 +40,6 @@ export default function RootLayout({ children }) {
 
           <nav style={{ position: "absolute", top: "20px", right: "20px" }}>
             <ul style={{ display: "flex", gap: "20px", listStyle: "none" }}>
-              
               {/*
               <li><Link href="/pages/shop/shop.js">Shop</Link></li>
               <li><Link href="/login">Login</Link></li>
