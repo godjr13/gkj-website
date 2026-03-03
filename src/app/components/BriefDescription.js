@@ -20,9 +20,9 @@ export default function BriefDescription() {
           if (entry.isIntersecting) {
             entry.target.classList.add(styles.visible);
           } else {
-          // 2. REMOVE: Item is leaving view, reset its state (hides it for the next slide-in).
-          entry.target.classList.remove(styles.visible);
-        }
+            // 2. REMOVE: Item is leaving view, reset its state (hides it for the next slide-in).
+            entry.target.classList.remove(styles.visible);
+          }
         });
       },
       { threshold: 0.1 }
@@ -36,36 +36,38 @@ export default function BriefDescription() {
   }, []);
 
   return (
-    <section ref={sectionRef} className={styles.container}>
-      <div className={styles.grid}>
-        {/* LEFT COLUMN */}
-        <div className={styles.column}>
-          <div data-slide className={`${styles.item} ${styles.fromLeft}`} style={{ backgroundImage: "url('item-background.jpg')"}}>
-            <h2 className={styles.item_header}>Our Shop</h2>
-            <p className={styles.text_padded}>High-quality guitars & accessories crafted with passion.</p>
+    <div className={styles["section-bg"]}>
+      <section ref={sectionRef} className={styles.container}>
+        <div className={styles.grid}>
+          {/* LEFT COLUMN */}
+          <div className={styles.column}>
+            <div data-slide className={`${styles.item} ${styles.fromLeft}`} style={{ backgroundImage: "url('item-background.jpg')" }}>
+              <h2 className={styles.item_header}>Our Shop</h2>
+              <p className={styles.text_padded}>High-quality guitars & accessories crafted with passion.</p>
+            </div>
+
+            <div data-slide className={`${styles.item} ${styles.fromLeft}`} style={{ backgroundImage: "url('item-background.jpg')" }}>
+              <h2 className={styles.item_header}>Custom Builds</h2>
+              <p className={styles.text_padded}>Tailored instruments built to your playing style.</p>
+            </div>
           </div>
 
-          <div data-slide className={`${styles.item} ${styles.fromLeft}`} style={{ backgroundImage: "url('item-background.jpg')"}}>
-            <h2 className={styles.item_header}>Custom Builds</h2>
-            <p className={styles.text_padded}>Tailored instruments built to your playing style.</p>
+          {/* Removed CENTER: vibrating string column entirely */}
+
+          {/* RIGHT COLUMN */}
+          <div className={styles.column}>
+            <div data-slide className={`${styles.item} ${styles.fromRight}`} style={{ backgroundImage: "url('item-background.jpg')" }}>
+              <h2 className={styles.item_header}>Research & Development</h2>
+              <p className={styles.text_padded}> Endless pursuit of musical perfection</p>
+            </div>
+
+            <div data-slide className={`${styles.item} ${styles.fromRight}`} style={{ backgroundImage: "url('item-background.jpg')" }}>
+              <h2 className={styles.item_header}>Community</h2>
+              <p className={styles.text_padded}>Events, jams, and a place to share your progress.</p>
+            </div>
           </div>
         </div>
-
-        {/* Removed CENTER: vibrating string column entirely */}
-
-        {/* RIGHT COLUMN */}
-        <div className={styles.column}>
-          <div data-slide className={`${styles.item} ${styles.fromRight}`} style={{ backgroundImage: "url('item-background.jpg')"}}>
-            <h2 className={styles.item_header}>Research & Development</h2>
-            <p className={styles.text_padded}> Endless pursuit of musical perfection</p>
-          </div>
-
-          <div data-slide className={`${styles.item} ${styles.fromRight}`} style={{ backgroundImage: "url('item-background.jpg')"}}>
-            <h2 className={styles.item_header}>Community</h2>
-            <p className={styles.text_padded}>Events, jams, and a place to share your progress.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

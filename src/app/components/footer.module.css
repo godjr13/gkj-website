@@ -1,0 +1,35 @@
+.footer {
+  padding: 40px 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+}
+
+.picksAnim svg {
+  width: 200px;
+  height: auto;
+  cursor: pointer;
+}
+
+/* Initial state */
+.picksAnim :global(.svg-elem-1),
+.picksAnim :global(.svg-elem-2),
+.picksAnim :global(.svg-elem-3),
+.picksAnim :global(.svg-elem-4),
+.picksAnim :global(.svg-elem-5),
+.picksAnim :global(.svg-elem-6),
+.picksAnim :global(.svg-elem-7),
+.picksAnim :global(.svg-elem-8) {
+  fill: transparent;
+  transition: fill 0.7s cubic-bezier(0.47, 0, 0.745, 0.715);
+}
+
+/* Hover state */
+.footer:hover .picksAnim :global(.svg-elem-1) { fill: #e6e7e8; }
+.footer:hover .picksAnim :global(.svg-elem-2) { fill: #231f20; }
+.footer:hover .picksAnim :global(.svg-elem-3) { fill: #ccc; }
+.footer:hover .picksAnim :global(.svg-elem-4) { fill: #231f20; }
+.footer:hover .picksAnim :global(.svg-elem-5) { fill: #999; }
+.footer:hover .picksAnim :global(.svg-elem-6) { fill: #231f20; } /* Fixed duplicate .svg-elem-1 */
+.footer:hover .picksAnim :global(.svg-elem-7) { fill: gray; }
+.footer:hover .picksAnim :global(.svg-elem-8) { fill: #231f20; }

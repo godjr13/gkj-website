@@ -1,11 +1,11 @@
 :root {
-  --background: #ffffff;
+  --background: #000000;
   --foreground: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ffffff;
+    --background: #000000;
     --foreground: #ffffff;
   }
 }
@@ -62,6 +62,7 @@ a {
 li{
   color: #ffffff;
 }
+
 
 
 @media (prefers-color-scheme: dark) {

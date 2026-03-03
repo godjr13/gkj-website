@@ -3,6 +3,7 @@ import GuitarScene from "@components/GuitarScene";
 import BriefDescription from "./components/BriefDescription";
 import Gallery from "./components/Gallery";
 
+
 export default function Home() {
   return (
     <div className="home">
@@ -12,7 +13,7 @@ export default function Home() {
       </div>
 
       <BriefDescription />
-
+      
     </div>
   );
 }

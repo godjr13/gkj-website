@@ -4,7 +4,7 @@ import Image from "next/image"
 
 export default function Contact() {
   return (
-    <div>
+    <div className="backgound">
       <div className="banner">
       <Image
         src="/contact-header.png"

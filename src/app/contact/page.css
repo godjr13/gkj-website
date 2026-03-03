@@ -6,6 +6,10 @@ h3 {
     font-family: Arial;
 }
 
+.background{
+    background-color: black;
+}
+
 .banner {
     position: relative;
     width: 100%;
