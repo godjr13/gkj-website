@@ -40,8 +40,9 @@ export default function RootLayout({ children }) {
 
           <nav style={{ position: "absolute", top: "20px", right: "20px" }}>
             <ul style={{ display: "flex", gap: "20px", listStyle: "none" }}>
+              
+              <li><Link href="/shop">Shop</Link></li>
               {/*
-              <li><Link href="/pages/shop/shop.js">Shop</Link></li>
               <li><Link href="/login">Login</Link></li>
               <li><Link href="/gallery">Gallery</Link></li>
               <li><Link href="/about">About</Link></li>

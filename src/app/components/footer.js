@@ -1,5 +1,5 @@
 "use client";
-import styles from "./footer.module.css"; // use module css
+import styles from "./footer.module.css"; 
 
 export default function Footer() {
   return (
@@ -38,10 +38,20 @@ export default function Footer() {
           </g>
 
         </svg>
-
-        
-
       </div>
+      
+        <div className={styles.footercon}>
+            <ul className={styles.unorderedli}>
+                <h4>Company</h4>
+                <li>Privacy Policy</li>
+                <li>Terms of Service</li>
+            </ul>
+            <ul className={styles.unorderedli}>
+                <h4>Customer Service</h4>
+                <li>Help</li>
+                <li>Contact Information</li>
+            </ul>
+        </div>
     </div>
   );
 }

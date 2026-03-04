@@ -2,34 +2,78 @@
   padding: 40px 0;
   background: black;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .picksAnim svg {
-  width: 200px;
+  width: 130px;
   height: auto;
   cursor: pointer;
 }
 
 /* Initial state */
-.picksAnim :global(.svg-elem-1),
-.picksAnim :global(.svg-elem-2),
-.picksAnim :global(.svg-elem-3),
-.picksAnim :global(.svg-elem-4),
-.picksAnim :global(.svg-elem-5),
-.picksAnim :global(.svg-elem-6),
-.picksAnim :global(.svg-elem-7),
+.picksAnim :global(.svg-elem-1){
+  fill:#e6e6e6;
+  fill-opacity: "0.2";
+}
+.picksAnim :global(.svg-elem-2){
+  fill:#525252;
+  fill-opacity: "0.2";
+}
+.picksAnim :global(.svg-elem-3){
+  fill:#8a8888;
+  fill-opacity: "0.2";
+}
+.picksAnim :global(.svg-elem-4){
+  fill:#ffffff;
+  fill-opacity: "0.2";
+}
+.picksAnim :global(.svg-elem-5){
+  fill:#6e6e6e;
+  fill-opacity: "0.2";
+}
+.picksAnim :global(.svg-elem-6){
+  fill:#d6d6d6;
+  fill-opacity: "0.2";
+
+}
+.picksAnim :global(.svg-elem-7){
+  fill:#555455;
+  fill-opacity: "0.2";
+}
 .picksAnim :global(.svg-elem-8) {
-  fill: transparent;
+  fill:#e6e7e8;
+  fill-opacity: "0.2";
   transition: fill 0.7s cubic-bezier(0.47, 0, 0.745, 0.715);
 }
 
 /* Hover state */
-.footer:hover .picksAnim :global(.svg-elem-1) { fill: #e6e7e8; }
+.footer:hover .picksAnim :global(.svg-elem-1) { fill: #a32c2c; }
 .footer:hover .picksAnim :global(.svg-elem-2) { fill: #231f20; }
-.footer:hover .picksAnim :global(.svg-elem-3) { fill: #ccc; }
+.footer:hover .picksAnim :global(.svg-elem-3) { fill: #c44747; }
 .footer:hover .picksAnim :global(.svg-elem-4) { fill: #231f20; }
-.footer:hover .picksAnim :global(.svg-elem-5) { fill: #999; }
+.footer:hover .picksAnim :global(.svg-elem-5) { fill: #d37a7a; }
 .footer:hover .picksAnim :global(.svg-elem-6) { fill: #231f20; } /* Fixed duplicate .svg-elem-1 */
-.footer:hover .picksAnim :global(.svg-elem-7) { fill: gray; }
+.footer:hover .picksAnim :global(.svg-elem-7) { fill: rgb(206, 206, 206); }
 .footer:hover .picksAnim :global(.svg-elem-8) { fill: #231f20; }
+
+.footercon{
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  padding: 20px;
+  margin: 20px;
+}
+
+.customer-li{
+  list-style: none;
+  padding: 20px;
+  margin: 20px;
+}
+
+.unorderedli{
+  padding: 20px;
+}

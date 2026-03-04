@@ -39,10 +39,11 @@ export default function Contact() {
             <button >Send</button>
           </Form>
         </div>
-
-        <div className="contact-links">
-
+        {/*
+         <div className="contact-links"> 
         </div>
+        
+        */}
       </div>
     </div>
   );
