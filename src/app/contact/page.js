@@ -1,8 +1,33 @@
+"use client";
 import styles from "./page.css";
+import { useState } from "react";
 import Form from 'next/form'
 import Image from "next/image"
 
 export default function Contact() {
+  const [status, setstatus] = useState("");
+
+  async function handleSubmit(){
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const res = await fetch("/api/contact",{
+      method: "POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(
+        {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+        }
+      ),
+    });
+
+    const data = await res.json();
+    setStatus(data.success ? "Message sent!" : "Something went wrong.");
+  }
+
+
   return (
     <div className="backgound">
       <div className="banner">
@@ -23,7 +48,7 @@ export default function Contact() {
         </div>
 
         <div className="contact-form">
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <h3 className="input-name" >Name</h3>
             <input className="input" name="name" type="text" id="name" />
 
@@ -38,6 +63,7 @@ export default function Contact() {
             <br></br>
             <button >Send</button>
           </Form>
+          {status && <p>{status}</p>}
         </div>
         {/*
          <div className="contact-links"> 
