@@ -1,0 +1,51 @@
+.row {
+    margin-bottom: 2.5rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.track_wrapper {
+    position: relative;
+}
+
+.track {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 0.5rem 0.25rem;
+}
+
+.track::-webkit-scrollbar {
+    display: none;
+}
+
+.track > * {
+    flex-shrink: 0;
+}
+
+.arrow_btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background: #020202;
+    cursor: pointer;
+}
+
+.arrow_btn:hover{
+    background: #2b2a2a;
+}
+
+.left { left: -20px; }
+.right { right: -20px; }
