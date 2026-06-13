@@ -68,6 +68,11 @@
   margin: 20px;
 }
 
+.footerText{
+  text-align: center;
+  font-size: small;
+}
+
 .customer-li{
   list-style: none;
   padding: 20px;

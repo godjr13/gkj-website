@@ -41,16 +41,7 @@ export default function Footer() {
       </div>
       
         <div className={styles.footercon}>
-            <ul className={styles.unorderedli}>
-                <h4>Company</h4>
-                <li>Privacy Policy</li>
-                <li>Terms of Service</li>
-            </ul>
-            <ul className={styles.unorderedli}>
-                <h4>Customer Service</h4>
-                <li>Help</li>
-                <li>Contact Information</li>
-            </ul>
+            <h1 className={styles.footerText}>© 2026 GKJ PRODUCTIONS (PVT) LTD <br/> All rights reserved.</h1>
         </div>
     </div>
   );
