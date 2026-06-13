@@ -1,3 +1,4 @@
+
 .footer {
   padding: 40px 0;
   background: black;
@@ -66,6 +67,11 @@
   flex-direction: row;
   padding: 20px;
   margin: 20px;
+}
+
+.footerText{
+  text-align: center;
+  font-size: small;
 }
 
 .customer-li{
