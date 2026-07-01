@@ -12,10 +12,10 @@ export async function POST(req) {
     }
 
     await resend.emails.send({
-      from: "Contact Form <info@gkjproductions.com>", // change after verifying your domain
+      from: "Contact Form <info@gkjproductions.com>", 
       to: process.env.CONTACT_EMAIL,
       subject: `New message from ${name}`,
-      replyTo: email,
+      reply_to: email,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
     });
 
