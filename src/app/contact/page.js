@@ -5,10 +5,14 @@ import Form from 'next/form'
 import Image from "next/image"
 
 export default function Contact() {
-  const [status, setstatus] = useState("");
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(){
+  async function handleSubmit(e){
     e.preventDefault();
+    setLoading(true);
+    setStatus("");
+
     const formData = new FormData(e.target);
 
     const res = await fetch("/api/contact",{
@@ -25,6 +29,7 @@ export default function Contact() {
 
     const data = await res.json();
     setStatus(data.success ? "Message sent!" : "Something went wrong.");
+    setLoading(false);
   }
 
 
@@ -54,7 +59,7 @@ export default function Contact() {
             <input className="input" name="name" type="text" id="name" />
 
             <h3 className="input-name">Email</h3>
-            <input className="input" type="email" name="Email" id="email" />
+            <input className="input" type="email" name="email" id="email" />
 
             <h3 className="input-name">Message</h3>
             <textarea
@@ -62,7 +67,9 @@ export default function Contact() {
               id="message"
               name="message" />
             <br></br>
-            <button >Send</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Sending..." : "Send"}
+            </button>
           </Form>
           {status && <p>{status}</p>}
         </div>
