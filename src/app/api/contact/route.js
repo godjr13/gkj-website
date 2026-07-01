@@ -12,7 +12,7 @@ export async function POST(req) {
     }
 
     await resend.emails.send({
-      from: "Contact Form <gkjproductions@gmail.com>", 
+      from: "Contact Form <notifications@gkjproductions.com>", 
       to: process.env.CONTACT_EMAIL,
       subject: `New message from ${name}`,
       reply_to: email,
