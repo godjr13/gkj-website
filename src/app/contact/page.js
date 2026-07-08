@@ -50,7 +50,11 @@ export default function Contact() {
           <h1 className="getintouch">Get In Touch</h1>
           <p>You’re not here for ordinary sound - and neither are we.
             Whether you're chasing pristine clarity, controlled chaos, warm analog character, or stage-shaking power, we build equipment that delivers with precision and intent. Every project starts with understanding your needs, your space, and the way you experience music.</p>
-            <p>E-mail: info@gkjproductions.com</p>
+            
+            <div className="mail">
+              <img width="48" height="48" src="https://img.icons8.com/pulsar-gradient/48/new-post.png" alt="new-post"/>
+              <p>info@gkjproductions.com</p>
+            </div>
         </div>
 
         <div className="contact-form">
