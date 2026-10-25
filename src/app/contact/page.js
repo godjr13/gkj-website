@@ -1,7 +1,6 @@
 "use client";
 import styles from "./page.css";
 import { useState } from "react";
-import Form from 'next/form'
 import Image from "next/image"
 
 export default function Contact() {
@@ -15,26 +14,29 @@ export default function Contact() {
 
     const formData = new FormData(e.target);
 
-    const res = await fetch("/api/contact",{
-      method: "POST",
-      headers: { "Content-Type": "application/json"},
-      body: JSON.stringify(
-        {
-        name: formData.get("name"),
-        email: formData.get("email"),
-        message: formData.get("message"),
-        }
-      ),
-    });
-
-    const data = await res.json();
-    setStatus(data.success ? "Message sent!" : "Something went wrong.");
-    setLoading(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          message: formData.get("message"),
+        }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? "Message sent!" : data.error || "Something went wrong.");
+      if (data.success) e.target.reset();
+    } catch {
+      setStatus("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
 
   return (
-    <div className="backgound">
+    <main className="background">
       <div className="banner">
       <Image
         src="/contact-header.png"
@@ -58,23 +60,23 @@ export default function Contact() {
         </div>
 
         <div className="contact-form">
-          <Form onSubmit={handleSubmit}>
-            <h3 className="input-name" >Name</h3>
-            <input className="input" name="name" type="text" id="name" />
+          <form onSubmit={handleSubmit}>
+            <label className="input-name" htmlFor="name">Name</label>
+            <input className="input" name="name" type="text" id="name" required />
 
-            <h3 className="input-name">Email</h3>
-            <input className="input" type="email" name="email" id="email" />
+            <label className="input-name" htmlFor="email">Email</label>
+            <input className="input" type="email" name="email" id="email" required />
 
-            <h3 className="input-name">Message</h3>
+            <label className="input-name" htmlFor="message">Message</label>
             <textarea
               className="message"
               id="message"
-              name="message" />
-            <br></br>
+              name="message"
+              required />
             <button type="submit" disabled={loading}>
               {loading ? "Sending..." : "Send"}
             </button>
-          </Form>
+          </form>
           {status && <p>{status}</p>}
         </div>
         {/*
@@ -83,6 +85,6 @@ export default function Contact() {
         
         */}
       </div>
-    </div>
+    </main>
   );
 }
