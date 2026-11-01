@@ -1,47 +1,15 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
+"use client";
+import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import "./page.css";
 
+const blank = { name: "", description: "", price: "", image_url: "", category: "General", inventory: 0, featured: false };
 export default function Dashboard() {
-  const [products, setProducts] = useState([])
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState('')
-  const [imageUrl, setImageUrl] = useState('')
-
-  useEffect(() => {
-    fetchProducts()
-  }, [])
-
-  async function fetchProducts() {
-    const { data } = await supabase.from('products').select('*')
-    setProducts(data)
-  }
-
-  async function addProduct() {
-    await supabase.from('products').insert([{ name, description, price, image_url: imageUrl }])
-    fetchProducts()
-  }
-
-  return (
-    <main className="p-8">
-      <h1 className="text-2xl mb-4">Admin Dashboard</h1>
-      <div className="flex flex-col space-y-2 mb-6">
-        <input placeholder="Name" onChange={e => setName(e.target.value)} />
-        <input placeholder="Description" onChange={e => setDescription(e.target.value)} />
-        <input placeholder="Price" onChange={e => setPrice(e.target.value)} />
-        <input placeholder="Image URL" onChange={e => setImageUrl(e.target.value)} />
-        <button onClick={addProduct}>Add Product</button>
-      </div>
-      <div className="grid grid-cols-3 gap-4">
-        {products.map(p => (
-          <div key={p.id} className="border rounded-lg p-4">
-            <img src={p.image_url} className="h-48 w-full object-cover" />
-            <h2 className="text-lg font-semibold">{p.name}</h2>
-            <p>{p.price}</p>
-          </div>
-        ))}
-      </div>
-    </main>
-  )
+  const [products, setProducts] = useState([]); const [messages, setMessages] = useState([]); const [form, setForm] = useState(blank); const [editing, setEditing] = useState(null); const [notice, setNotice] = useState("");
+  async function load() { const [p, m] = await Promise.all([fetch("/api/products"), fetch("/api/admin/messages")]); if (p.ok) setProducts(await p.json()); if (m.ok) setMessages(await m.json()); }
+  useEffect(() => { load(); }, []);
+  async function save(e) { e.preventDefault(); const method = editing ? "PATCH" : "POST"; const url = editing ? `/api/products/${editing}` : "/api/products"; const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...form, price: Math.round(Number(form.price) * 100) }) }); if (res.ok) { setForm(blank); setEditing(null); setNotice("Inventory saved."); load(); } else setNotice("Please sign in as an admin to manage inventory."); }
+  async function remove(id) { if (!window.confirm("Delete this product?")) return; await fetch(`/api/products/${id}`, { method: "DELETE" }); load(); }
+  async function signOut() { await authClient.signOut(); window.location.href = "/admin/sign-in"; }
+  return <main className="admin-page"><header className="admin-header"><div><p className="eyebrow">GKJ PRODUCTIONS / ADMIN</p><h1>Inventory control</h1></div><button onClick={signOut}>Sign out</button></header><section className="admin-layout"><form className="product-form" onSubmit={save}><h2>{editing ? "Edit product" : "Add product"}</h2>{["name","description","image_url","category","inventory","price"].map((field) => <label key={field}>{field.replace("_", " ")} {field === "description" ? <textarea value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} required={field === "name"} /> : <input type={field === "price" || field === "inventory" ? "number" : "text"} step={field === "price" ? "0.01" : undefined} value={form[field]} onChange={(e) => setForm({ ...form, [field]: e.target.value })} required={field === "name"} />}</label>)}<button type="submit">{editing ? "Save changes" : "Add to shop"}</button>{editing && <button type="button" className="secondary" onClick={() => { setEditing(null); setForm(blank); }}>Cancel</button>}<p>{notice}</p></form><section><div className="section-heading"><h2>{products.length} products</h2><span>{messages.length} contact messages</span></div><div className="inventory-list">{products.map((p) => <article key={p.id}><div><h3>{p.name}</h3><p>${(p.price / 100).toFixed(2)} · {p.inventory} in stock</p></div><div className="actions"><button onClick={() => { setEditing(p.id); setForm({ ...p, price: p.price / 100 }); }}>Edit</button><button className="danger" onClick={() => remove(p.id)}>Delete</button></div></article>)}</div><div className="messages"><h2>Messages</h2>{messages.map((m) => <article key={m.id}><strong>{m.name} · {m.email}</strong><p>{m.message}</p></article>)}</div></section></section></main>;
 }

@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
+export default function SignIn() { const [email, setEmail] = useState(""); const [password, setPassword] = useState(""); const [error, setError] = useState(""); async function submit(e) { e.preventDefault(); const result = await authClient.signIn.email({ email, password }); if (result.error) setError("Invalid sign-in details."); else window.location.href = "/admin/dashboard"; } return <main className="admin-page auth-page"><form className="product-form" onSubmit={submit}><p className="eyebrow">GKJ PRODUCTIONS / ADMIN</p><h1>Sign in</h1><label>Email<input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required /></label><label>Password<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required /></label><button>Continue</button>{error && <p>{error}</p>}</form></main>; }
