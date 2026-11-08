@@ -19,5 +19,9 @@ export async function requireAdmin() {
 }
 
 export async function recordAdminAction(actorId, action, entityType, entityId = null, details = null) {
-  await db.execute(sql`INSERT INTO "admin_audit_log" ("id", "actorId", "action", "entityType", "entityId", "details") VALUES (${randomUUID()}, ${actorId}, ${action}, ${entityType}, ${entityId}, ${details ? JSON.stringify(details) : null})`);
+  try {
+    await db.execute(sql`INSERT INTO "admin_audit_log" ("id", "actorId", "action", "targetId", "details") VALUES (${randomUUID()}, ${actorId}, ${action}, ${entityId}, ${details ? JSON.stringify({ entityType, ...details }) : JSON.stringify({ entityType })})`);
+  } catch (error) {
+    console.error("[v0] Audit log write failed:", error);
+  }
 }
